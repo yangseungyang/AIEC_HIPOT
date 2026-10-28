@@ -6,6 +6,7 @@
 'Reference  : 
 'Memo       : 
 'Issue      : 2025/02/13  Rev 0.00    Daehee.Kim       New Release
+'           : 2026/10/26  Rev 0.02    YSH              바코드 분배 프로그램(Barcode_Router) COM 연동, 신규 설비(TOS9301+TOS9320×3) 대응   'Ver0.02 YSH ADD
 
 '==========================================================
 
@@ -24,7 +25,8 @@ Public Class frmMain
 
     'Program Ver ==========================================
     'Private Const Version As String = "0.00"   '2025.02.13 Ver 0.00 KDH
-    Private Const Version As String = "0.01"    '2025.08.11 Ver 0.01 KDH
+    'Private Const Version As String = "0.01"    '2025.08.11 Ver 0.01 KDH       'Ver0.02 YSH DEL
+    Private Const Version As String = "0.02"    '2026.10.26 Ver 0.02 YSH        'Ver0.02 YSH ADD : 바코드 분배 프로그램 연동 / 신규 설비 대응 (md Rev 3 6-4항, SystemSetting.mdb 0.02 레코드 추가)
 
     Dim mAppPath As String = Mid(Application.StartupPath, 1, InStr(Application.StartupPath, "bin") - 1)
     Private EtherComN As New EtherComN.Dll
@@ -60,7 +62,8 @@ Public Class frmMain
     Dim Manual As String = "N"
     Public SelfTest As String = "N"
     Private COND As String = ""
-    Private myTOS93xxNo As String = "DN000939" 'USB Serial
+    'Private myTOS93xxNo As String = "DN000939" 'USB Serial     'Ver0.02 YSH DEL
+    Private myTOS93xxNo As String = "FR000554" 'USB Serial      'Ver0.02 YSH ADD : 신규 설비 TOS9301 은 FAM3 와 공용. S/N 미확정이라 임시로 FAM3(Ver 0.10) 값과 동일 (md 6-7항, 구조설계 Q5)
     Public selftest_Fin As Boolean = False
     Public selftest_NG As Boolean = False
     'Const Process_Code As String = "FAM3_010"          'Ver 0.01 KDH DEL
@@ -74,6 +77,12 @@ Public Class frmMain
     Dim mInspectionMeasure As String = ""
     Dim mPLASMABarcode As String
     Private myLbTestItem() As System.Windows.Forms.Label
+
+    '----------------------------- Ver0.02 YSH ADD Start --------------------------------
+    ' 바코드 분배 프로그램(Barcode_Router) 연동 - 수신 COM / 창 앞으로 / END 회신은 Class\clsRouterLink.vb
+    ' (md Rev 3 6-2항, 7-7~7-10항 / 구조설계 A8-02 ~ A8-07)
+    Private WithEvents cRouter As clsRouterLink
+    '----------------------------- Ver0.02 YSH ADD End ----------------------------------
 
     '----------------------------- Ver 0.01 KDH ADD Start --------------------------------
     Public Property TEST_MEASURE() As String
@@ -252,6 +261,12 @@ Public Class frmMain
         'Reset =====================================
         PLC_RUN("192.168.1.2", "01" & "BWRY" & "201" & ",016," & "0000000000000000")
 
+        '----------------------------- Ver0.02 YSH ADD Start --------------------------------
+        ' Router 수신 COM 열기 (md Rev 3 6-2항, 7-10항 / 구조설계 A8-04) - BarcodeReaderPort 공란이면 HID 만
+        cRouter = New clsRouterLink(Me, mAppPath)
+        Call cRouter.Open()
+        '----------------------------- Ver0.02 YSH ADD End ----------------------------------
+
     End Sub
     Private Sub frmMain_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         cSys = New cls102_SignalTower
@@ -264,7 +279,25 @@ Public Class frmMain
 
         PLC_RUN("192.168.1.2", "01" & "BWRY" & "201" & ",016," & "0000000000000000")
 
+        '----------------------------- Ver0.02 YSH ADD Start --------------------------------
+        ' Router 수신 COM 닫기 (구조설계 A8-07)
+        If cRouter IsNot Nothing Then cRouter.Close()
+        '----------------------------- Ver0.02 YSH ADD End ----------------------------------
+
     End Sub
+
+    '----------------------------- Ver0.02 YSH ADD Start --------------------------------
+    Private Sub cRouter_BarcodeReceived(ByVal sBarcode As String) Handles cRouter.BarcodeReceived
+        '==========================================================================================
+        'Function : Barcode_Router 로 받은 바코드 처리 (md Rev 3 7-8항 / 구조설계 A8-05)
+        'Remarks  : 기존 HID 입력(Enter)과 같은 처리를 하도록 TextBox_BarCode_keydown 을 그대로 호출한다
+        '           (8자리 = 작업자 갱신, 그 외 = Execution → 결과 지움)
+        '           창을 앞으로 / 오류 표시 / END 회신은 clsRouterLink 가 한다
+        '==========================================================================================
+        TextBox_BarCode.Text = sBarcode
+        Call TextBox_BarCode_keydown(TextBox_BarCode, New KeyEventArgs(Keys.Return))
+    End Sub
+    '----------------------------- Ver0.02 YSH ADD End ----------------------------------
 
     Private Sub MakeSystemLog()
         '==============================================================================================================

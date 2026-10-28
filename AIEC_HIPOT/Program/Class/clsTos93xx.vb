@@ -97,6 +97,14 @@ Public Class clsTos93xx
             Me.SendOnly("ROUT:" & Testmode & ":TERM 102," & frmMain.myDataSet.Test_Scanner102(Row).ToString)
             Me.SendOnly("ROUT:" & Testmode & ":TERM 103," & frmMain.myDataSet.Test_Scanner103(Row).ToString)
             Me.SendOnly("ROUT:" & Testmode & ":TERM 104," & frmMain.myDataSet.Test_Scanner104(Row).ToString)
+            '----------------------------- Ver0.02 YSH ADD Start -----------------------------------
+            ' 신규 설비는 TOS9301 + TOS9320 ×3 (101~104 / 201~204 / 301~304) 이고 FAM3 프로그램과 같이 쓴다.
+            ' A8 은 101~104 만 쓰므로, FAM3 검사 후 남아 있을 수 있는 201~304 를 OPEN 으로 만든다.
+            ' 근거 : md Rev 3 6-7항 / 구조설계 A8-10 / FE1-AIEC002_1
+            For Each sCh As String In {"201", "202", "203", "204", "301", "302", "303", "304"}
+                Me.SendOnly("ROUT:" & Testmode & ":TERM " & sCh & ",OPEN")
+            Next
+            '----------------------------- Ver0.02 YSH ADD End -------------------------------------
 
             TestItemCheckSpec(0) = frmMain.myDataSet.Test_Testmode(Row)
             TestItemCheckSpec(1) = frmMain.myDataSet.Test_TestVoltage(Row)
