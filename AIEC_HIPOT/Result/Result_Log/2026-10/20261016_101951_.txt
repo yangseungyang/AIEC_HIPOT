@@ -1,0 +1,31 @@
+ 
+[10:19:30] 
+System = AIEC耐電圧試験機  Ver : 0.01
+***************
+2026/10/16 10:19:31
+Temperature = 24.4
+Humidity = 54.6
+Operator = KYUNG MI LEE
+BAR = 
+MSCode = 
+Serial = 
+OrderNo = 
+XJNo = 
+TestItem = 
+***************
+
+[10:19:35] BOX Open
+[10:19:40] TestDB Read OK
+[10:19:40] Test_Select : 1 Ready
+[10:19:40] Test_Select : 1 Start
+[10:19:40] Test_Select : 1 Test Wait
+3.8
+A8HPU始業点検 PASS
+[10:19:44] Test_Select : 2 Ready
+[10:19:44] Test_Select : 2 Start
+[10:19:44] Test_Select : 2 Test Wait
+3.8
+A8HPU始業点検 PASS
+[10:19:48] End
+TestTime = 2
+TotalTime = 20

@@ -1,0 +1,36 @@
+2026-10-16 10:29:12
+[10:29:24] 
+System = AIEC‘Ï“dˆ³ŽŽŒ±‹@  Ver : 0.01
+***************
+2026/10/16 10:29:24
+Temperature = 24.4
+Humidity = 54.6
+Operator = KYUNG MI LEE
+BAR = R6SF9S
+MSCode = A8HPU-16-0P
+Serial = T13A57697
+OrderNo = 2011607568
+XJNo = 
+TestItem = A8HPU
+***************
+[10:29:25] BOX Open
+[10:29:30] TestDB Read OK
+[10:29:30] Test_Select : 1 Ready
+[10:29:30] Test_Select : 1 Start
+[10:29:30] Test_Select : 1 Test Wait
+3.8
+[ACW TEST 1] 600 VAC, 2sec
+  Scanner 1 : LOW, HIGH, LOW, LOW
+  Current : 4.7393 mA
+PASS
+[10:29:35] Test_Select : 2 Ready
+[10:29:35] Test_Select : 2 Start
+[10:29:35] Test_Select : 2 Test Wait
+3.8
+[ACW TEST 2] 1200 VAC, 2sec
+  Scanner 1 : LOW, LOW, HIGH, LOW
+  Current : 0.0799 mA
+PASS
+[10:29:39] End
+TestTime = 2
+TotalTime = 18

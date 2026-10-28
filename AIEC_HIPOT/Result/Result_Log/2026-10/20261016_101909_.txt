@@ -1,0 +1,28 @@
+ 
+[10:18:51] 
+System = AIEC耐電圧試験機  Ver : 0.01
+***************
+2026/10/16 10:18:51
+Temperature = 24.4
+Humidity = 54.6
+Operator = KYUNG MI LEE
+BAR = 
+MSCode = 
+Serial = 
+OrderNo = 
+XJNo = 
+TestItem = 
+***************
+[10:18:53] BOX Open
+[10:18:58] TestDB Read OK
+[10:18:58] Test_Select : 1 Ready
+[10:18:59] Test_Select : 1 Start
+[10:18:59] Test_Select : 1 Test Wait
+3.8
+[ACW TEST 1] 600 VAC, 2sec
+  Scanner 1 : LOW, HIGH, LOW, LOW
+0.7324 mA
+TOS93xxTest始業点検 PASS
+[10:19:03] End
+TestTime = 1
+TotalTime = 17

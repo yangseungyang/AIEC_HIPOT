@@ -1,0 +1,14 @@
+C:\AIEC_HIPOT\AIEC_HIPOT\System_Log\2026-10\2026-10-16.txt
+
+10:18:22 ■　システム起動 ==========================================================
+
+10:18:22 温度・湿度設定読込　・・・
+10:18:22 温度・湿度設定：24.4℃　54.6%
+
+10:18:25 データ保存：24.4℃ 54.6%
+10:18:26 Program Version Check OK
+10:18:26 OpratorName, ID Read OK
+10:18:27 共通ファイル取得：MSCODE.mdb
+10:18:27 MSCODE.mdb Update OK
+10:18:33 TestDB Read OK
+10:18:33 TOS Preset OK
